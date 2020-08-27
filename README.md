@@ -5,9 +5,11 @@ Project provides implementation of thread-safe functions for dynamic allocation.
 Custom_sbrk derive memory from system, which we will manage. <br>
 
 # How to run
-
-gcc -o (nazwa) testy_jednostkowe.c alokator.c memmanager.c -pthread
-./(nazwa)
+Serwer:
+```
+gcc -o tests testy_jednostkowe.c alokator.c memmanager.c -pthread
+.tests
+```
 
 # More details
 
