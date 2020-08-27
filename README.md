@@ -6,7 +6,10 @@ Custom_sbrk derive memory from system, which we will manage. <br>
 
 # How to run
 
-## More details
+gcc -o (nazwa) testy_jednostkowe.c alokator.c memmanager.c -pthread
+./(nazwa)
+
+# More details
 
 For every allocation there is used control block, space for data and fences. <br>
-Program is tested by unit tests for each function ('unit_test.c'), and simple program where we perform easy allocations and frees. Additionally there is part for thread-safe test, where we run 4 threads at the same time and similar as before they execute simple allocations and frees.
+Program is tested by unit tests for each function ('testy_jednostkowe.c'), and simple program where we perform easy allocations and frees.
