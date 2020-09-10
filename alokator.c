@@ -327,7 +327,8 @@ void * heap_malloc_aligned(size_t bajty)
         if (Block->status==free)
         {
             size_t odleglosc_do_struktury = ((sterta+i)-(((unsigned char *)Block)+sizeof(block)+fence_size));
-            if (odleglosc_do_struktury == 0)
+            size_t odleglosc_do_plotka = (((unsigned char *)Block)+Block->rozmiar+sizeof(block))-((sterta+i));
+            if (odleglosc_do_struktury == 0 && odleglosc_do_plotka >= bajty)
             {
                 if (Block->rozmiar > (bajty + control_size))
                 {
@@ -338,7 +339,7 @@ void * heap_malloc_aligned(size_t bajty)
             }
             else
             {
-                if (odleglosc_do_struktury > control_size)
+                if (odleglosc_do_struktury > control_size && odleglosc_do_plotka > bajty)
                 {
                     divide(Block, odleglosc_do_struktury-control_size);
                     Block = Block->next;
@@ -722,7 +723,7 @@ enum pointer_type_t get_pointer_type(const const void * adres)
                 return pointer_unallocated;
             }
         }
-        if (adres > (void *)(((unsigned char *)Block) + control_size - fence_size) && adres <= (void *)((unsigned char *)Block) + Block->rozmiar + control_size)
+        if (adres > (void *)(((unsigned char *)Block) + control_size - fence_size) && adres <= (void *)((unsigned char *)Block) + Block->rozmiar + control_size - fence_size)
         {
             pthread_mutex_unlock(&mem_mutex);
             return pointer_inside_data_block;
