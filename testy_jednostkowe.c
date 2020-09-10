@@ -1,8 +1,8 @@
 #include "alokator.h"
 #include <stdio.h>
+#include <string.h>
 #include <assert.h>
 #include <pthread.h>
-#include <string.h>
 
 void * fun()
 {
@@ -19,7 +19,7 @@ int main(void)
     //---Test glowny
     size_t free_bytes = heap_get_free_space();
     size_t used_bytes = heap_get_used_space();
-
+    
     void* p1 = heap_malloc_debug(8 * 1024 * 1024, __LINE__, __FILE__); // 8MB
     void* p2 = heap_malloc_debug(8 * 1024 * 1024, __LINE__, __FILE__); // 8MB
     void* p3 = heap_malloc_debug(8 * 1024 * 1024, __LINE__, __FILE__); // 8MB
@@ -86,20 +86,20 @@ int main(void)
     assert(heap_get_used_blocks_count() == 0);
     //---Test heap_malloc_aligned
     assert(heap_malloc_aligned(4) != NULL);
-    assert(heap_malloc_aligned(8*1024*1024) != NULL);
+    assert(heap_malloc_aligned(8*1024*1024) == NULL);
     assert(heap_malloc_aligned(0) == NULL);
     heap_reset();
     assert(heap_get_used_blocks_count() == 0);
-    assert(heap_malloc_aligned(5000) != NULL);
-    assert(heap_malloc_aligned(5000) != NULL);
-    assert(heap_malloc_aligned(5000) != NULL);
+    assert(heap_malloc_aligned(3000) != NULL);
+    assert(heap_malloc_aligned(3000) != NULL);
+    assert(heap_malloc_aligned(3000) != NULL);
     assert(heap_malloc_aligned(5) == NULL);
     heap_reset();
     assert(heap_get_used_blocks_count() == 0);
-    assert(heap_malloc_aligned(5000) != NULL);
-    void * space = heap_malloc_aligned(5000);
+    assert(heap_malloc_aligned(3000) != NULL);
+    void * space = heap_malloc_aligned(3000);
     assert(space != NULL);
-    assert(heap_malloc_aligned(5000) != NULL);
+    assert(heap_malloc_aligned(3000) != NULL);
     heap_free(space);
     assert(heap_malloc_aligned(5) == NULL);
     heap_reset();
